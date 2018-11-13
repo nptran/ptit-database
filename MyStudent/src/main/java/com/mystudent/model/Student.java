@@ -1,8 +1,9 @@
 package com.mystudent.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -35,7 +36,7 @@ public class Student implements Serializable {
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "id", nullable = false)
 	private Integer id;
 	
@@ -46,13 +47,13 @@ public class Student implements Serializable {
 	private String name;
 
 	@Column(name = "dob")
-	private LocalDate dob;
+	private String dob;
 	
-	@OneToMany(mappedBy="student", cascade= CascadeType.ALL)
-	private Set<Mark> marks;
+	@OneToMany(mappedBy="student", cascade=CascadeType.ALL, orphanRemoval=true)
+	private List<Mark> marks = new ArrayList<>();
 	
 	@JsonIgnoreProperties("students")
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Major.class, cascade = CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Major.class, cascade=CascadeType.REFRESH)
 	@JoinColumn(name = "MAJOR_ID", foreignKey = @ForeignKey (name="MAJOR_FK"), nullable=false, referencedColumnName="ID")
 	private Major major;
 	
@@ -60,8 +61,7 @@ public class Student implements Serializable {
 		super();
 	}
 
-	public Student(Integer id, String name, LocalDate dob) {
-		super();
+	public Student(Integer id, String name, String dob) {
 		this.id = id;
 		this.name = name;
 		this.dob = dob;
@@ -83,19 +83,19 @@ public class Student implements Serializable {
 		this.name = Processor.processName(name);
 	}
 
-	public LocalDate getDob() {
+	public String getDob() {
 		return dob;
 	}
 
 	public void setDob(String dob) {
-		this.dob = LocalDate.parse(dob, FORMATTER);
+		this.dob = dob;
 	}
 
-	public Set<Mark> getMarks() {
+	public List<Mark> getMarks() {
 		return marks;
 	}
 
-	public void setMarks(Set<Mark> marks) {
+	public void setMarks(List<Mark> marks) {
 		this.marks = marks;
 	}
 

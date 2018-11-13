@@ -11,7 +11,9 @@ public interface StudentService {
 
     List<Student> search(String q);
 
-    Student getOne(Integer id);
+    Optional<Student> getOne(Integer id);
+    
+    Student getForMark(Integer id);
     
     void save(Student contact);
 

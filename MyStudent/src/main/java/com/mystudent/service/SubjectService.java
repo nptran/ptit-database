@@ -21,6 +21,8 @@ public interface SubjectService {
 	
 	void save(Subject subject);
 	
+	Subject getForMark(Integer id);
+	
 //	List<Student> getStudentFrom();
 
 }

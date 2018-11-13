@@ -47,7 +47,7 @@ public class StudentController {
 	}
 
 	@GetMapping("/student/create")
-	public String createStudent(Model student, Model major) {
+	public String createStudent(Model student, Model major, Model mark) {
 		student.addAttribute("student", new Student());
 		major.addAttribute("majorsBind", majorService.getAll());
 		return "form";
@@ -63,12 +63,6 @@ public class StudentController {
 		return "redirect:/student";
 	}
 
-	@GetMapping("/student/edit-id={id}")
-	public String edit(@PathVariable Integer id, @Valid Model model, Model major) {
-		model.addAttribute("student", studentService.getOne(id));
-		major.addAttribute("majorsBind",majorService.getAll());
-		return "form-student-update";
-	}
 
 	@GetMapping("/student/{id}/delete")
 	public String deleteStudent(@PathVariable Integer id, RedirectAttributes redirect) {
@@ -86,12 +80,12 @@ public class StudentController {
 		model.addAttribute("students", studentService.search(s));
 		return "list";
 	}
-	
-	@GetMapping("/student/regiscourse-id={id}")
-	public String registCourse(@PathVariable Integer id, @RequestParam Model student, Model subject) {
-		student.addAttribute("student", studentService.getOne(id));
-		subject.addAttribute("subjectsBind", subjectService.getAll());
-		return "form-courseregistration";
+
+	@GetMapping("/student/edit-id={id}")
+	public String edit(@PathVariable Integer id, Model model, Model major) {
+		model.addAttribute("student", studentService.getOne(id));
+		major.addAttribute("majorsBind",majorService.getAll());
+		return "form-update";
 	}
 	
 }

@@ -4,6 +4,8 @@
 package com.mystudent.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
@@ -29,6 +32,11 @@ import javax.validation.constraints.Size;
 @Table(name="subject")
 public class Subject implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id")
@@ -38,10 +46,8 @@ public class Subject implements Serializable {
 	@Size(min = 2, max = 50, message="Tên môn học từ 2-50 ký tự")
 	private String name;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "MARK", joinColumns = { @JoinColumn(name = "SUBJECT_ID") }, 
-						inverseJoinColumns = {	@JoinColumn(name = "STUDENT_ID") })
-	private Set<Student> students;
+	@OneToMany(mappedBy="subject", cascade=CascadeType.ALL, orphanRemoval=true)
+	private List<Mark> marks = new ArrayList<>();
 	
 	@Transient
 	private String major_id;
@@ -77,12 +83,12 @@ public class Subject implements Serializable {
 		this.name = name;
 	}
 
-	public Set<Student> getStudents() {
-		return students;
+	public List<Mark> getMarks() {
+		return marks;
 	}
 
-	public void setStudents(Set<Student> students) {
-		this.students = students;
+	public void setMarks(List<Mark> marks) {
+		this.marks = marks;
 	}
 
 	public Set<Major> getMajors() {

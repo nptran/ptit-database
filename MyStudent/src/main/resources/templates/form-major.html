@@ -12,8 +12,8 @@
 				    <h2 style="font-size: 47px; margin-top: 0; margin-bottom: 20px">Thêm Chuyên Ngành</h2>
 				    <div class="form-group">
 				        <label>Mã Ngành</label> 
-				        <input type="text" class="form-control" th:field="*{id}" placeholder="Nhập ngày sinh vào đây..."/>
-				        <span class="label label-danger" th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Lỗi định dạng ngày tháng</span>
+				        <input type="text" class="form-control" th:field="*{id}" placeholder="Nhập mã ngành bằng số..."/>
+				        <span class="label label-danger" th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Lỗi định dạng</span>
 				    </div>
 				    <div class="form-group">
 				        <label>Tên Chuyên Ngành</label> 

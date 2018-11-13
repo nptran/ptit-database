@@ -39,13 +39,18 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student getOne(Integer id) {
-        return studentRepository.getOne(id);
+    public Optional<Student> getOne(Integer id) {
+        return studentRepository.findById(id);
     }
 
     @Override
     public void delete(Integer id) {
     	studentRepository.deleteById(id);
     }
+
+	@Override
+	public Student getForMark(Integer id) {
+		return studentRepository.getOne(id);
+	}
 
 }

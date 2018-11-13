@@ -41,6 +41,11 @@ public class SubjectServiceImpl implements SubjectService {
 		repository.save(subject);
 	}
 
+	@Override
+	public Subject getForMark(Integer id) {
+		return repository.getOne(id);
+	}
+
 //	@Override
 //	public List<Student> getStudentFrom() {
 //		return ;

@@ -4,7 +4,6 @@
 package com.mystudent.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -30,9 +29,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name="major")
 public class Major implements Serializable {
 
-	
-	private static Set<String> idList = new HashSet<>();
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	private Integer id;
 	
