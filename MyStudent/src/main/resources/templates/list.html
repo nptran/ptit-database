@@ -42,22 +42,27 @@
 					<table class="table table-bordered table-hover">
 						<thead>
 							<tr>
-								<th>No</th>
-								<th>Name</th>
-								<th>Group</th>
-								<th>Age</th>
-								<th>Edit</th>
-								<th>Delete</th>
+								<th>STT</th>
+								<th>Mã SV</th>
+								<th>Tên Sinh Viên</th>
+								<th>Ngày Sinh</th>
+								<th>Chuyên Ngành</th>
+								<th>Sửa</th>
+								<th>Điểm Học Phần</th>
+								<th>Xoá</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="contact,iterStat : ${students}">
 								<td th:text="${iterStat.count}"></td>
+								<td th:text="${contact.id}">
 								<td th:text="${contact.name}"></td>
-								<td th:text="${contact.group}"></td>
-								<td th:text="${contact.age}"></td>
+								<td th:text="${contact.dob}"></td>
+								<td th:text="${contact.major.name}"></td>
 								<td><a th:href="@{/student/edit-id={id}(id=${contact.id})}"><span
 										class="glyphicon glyphicon-pencil"></span></a></td>
+								<td><a th:href="@{/student/courses?id={id}(id=${contact.id})}"><span
+										class="	glyphicon glyphicon-calendar"></span></a></td>
 								<td><a th:href="@{/student/{id}/delete(id=${contact.id})}"><span
 										class="glyphicon glyphicon-trash"></span></a></td>
 							</tr>

@@ -1,18 +1,26 @@
 package com.mystudent.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mystudent.repository.Processor;
 
 @Entity
@@ -24,8 +32,10 @@ public class Student implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
 	private Integer id;
 	
@@ -35,24 +45,26 @@ public class Student implements Serializable {
 	@NotNull(message = "Nhập tên vào đã, đi đâu mà vội")
 	private String name;
 
-	@Column(name = "std_group")
-	@Size(min=3, max=3, message = "Tên lớp gồm 3 ký tự: D15, D16...")
-	private String group;
-
-	@Column(name = "age")
-	@Min(value = 18, message = "Em chưa 18?")
-	@Max(value = 60, message = "Già quá :)")
-	private Short age;
+	@Column(name = "dob")
+	private LocalDate dob;
+	
+	@OneToMany(mappedBy="student", cascade= CascadeType.ALL)
+	private Set<Mark> marks;
+	
+	@JsonIgnoreProperties("students")
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Major.class, cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "MAJOR_ID", foreignKey = @ForeignKey (name="MAJOR_FK"), nullable=false, referencedColumnName="ID")
+	private Major major;
 	
 	public Student() {
 		super();
 	}
 
-	public Student(Integer id, String name, Short age) {
+	public Student(Integer id, String name, LocalDate dob) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.age = age;
+		this.dob = dob;
 	}
 
 	public Integer getId() {
@@ -70,21 +82,29 @@ public class Student implements Serializable {
 	public void setName(String name) {
 		this.name = Processor.processName(name);
 	}
-	
-	public String getGroup() {
-		return group;
+
+	public LocalDate getDob() {
+		return dob;
 	}
 
-	public void setGroup(String group) {
-		this.group = group.toUpperCase();
+	public void setDob(String dob) {
+		this.dob = LocalDate.parse(dob, FORMATTER);
 	}
 
-	public Short getAge() {
-		return age;
+	public Set<Mark> getMarks() {
+		return marks;
 	}
 
-	public void setAge(Short age) {
-		this.age = age;
+	public void setMarks(Set<Mark> marks) {
+		this.marks = marks;
 	}
-	
+
+	public Major getMajor() {
+		return major;
+	}
+
+	public void setMajor(Major major) {
+		this.major=major;
+	}
+
 }

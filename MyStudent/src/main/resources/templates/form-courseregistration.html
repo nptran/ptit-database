@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: common-header"></head>
+<body>
+    <div class="header-nightsky">
+		<nav th:replace="fragments/layout :: header"></nav>
+
+	    <div class="hero form" style="margin:auto;">
+	        <div class="row">
+		        <form action="#" th:action="@{/student/save}" th:object="${student}"
+				    method="POST" novalidate="novalidate">
+				    <h2 style="font-size: 47px; margin-top: 0; margin-bottom: 20px">Đăng Ký Môn Học</h2>
+
+				    <th:block th:if="${#lists.isEmpty(subjectsBind)}">
+						<script type="text/javascript">
+			                window.onload = function() {
+			                    if(confirm("Chưa có môn học nào! Hãy tạo môn học trước!")) {
+			                    	window.location="http://localhost:8080/subject/create";
+			                    }
+			                };
+						</script>			
+						<h3>Hãy Tạo Môn Học Trước</h3>
+					</th:block>
+				    
+				    <th:block th:unless="${#lists.isEmpty(subjectsBind)}">
+						<div class="row">
+							<div class="form-group" th:each="subject,stat : ${subjectsBind}">
+						        <label class="custom-control custom-checkbox">
+								  <input type="checkbox" th:value="${subject.id}" th:field="*{subjects}" class="custom-control-input">
+								  <span class="custom-control-indicator"></span>
+								  <span class="custom-control-description" th:text="${subject.name}"></span>
+								</label>
+						    </div>
+						</div>
+				    <button type="submit" class="btn btn-primary" style="margin-right:0px">Lưu</button>
+					</th:block>
+				    
+				</form>
+	    	</div><!-- /.container -->
+    	</div><!-- /.hero -->
+    </div><!-- /.header-nightsky -->
+
+</body>
+</html>

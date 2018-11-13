@@ -7,11 +7,11 @@ import com.mystudent.model.Student;
 
 public interface StudentService {
 	
-	Iterable<Student> findAll();
+	Iterable<Student> getAll();
 
     List<Student> search(String q);
 
-    Optional<Student> findOne(Integer id);
+    Student getOne(Integer id);
     
     void save(Student contact);
 

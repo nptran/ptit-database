@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: common-header"></head>
+<body>
+    <div class="header-nightsky">
+		<nav th:replace="fragments/layout :: header"></nav>
+
+	    <div class="hero form" style="margin:auto;">
+	        <div class="row">
+		        <form action="#" th:action="@{/major/save}" th:object="${major}"
+				    method="POST" novalidate="novalidate">
+				    <h2 style="font-size: 47px; margin-top: 0; margin-bottom: 20px">Thêm Chuyên Ngành</h2>
+				    <div class="form-group">
+				        <label>Mã Ngành</label> 
+				        <input type="text" class="form-control" th:field="*{id}" placeholder="Nhập ngày sinh vào đây..."/>
+				        <span class="label label-danger" th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Lỗi định dạng ngày tháng</span>
+				    </div>
+				    <div class="form-group">
+				        <label>Tên Chuyên Ngành</label> 
+				        <input type="text" class="form-control" th:field="*{name}" placeholder="Đánh tên vào đây..."/> 
+				        <span class="label label-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Lỗi nhập tên</span>
+				    </div>
+				    <button type="submit" class="btn btn-primary" style="margin-right:0px">Lưu</button>
+				</form>
+	    	</div><!-- /.container -->
+    	</div><!-- /.hero -->
+    </div><!-- /.header-nightsky -->
+
+</body>
+</html>
