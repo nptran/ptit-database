@@ -1,2 +1,2 @@
 # ptit-database
-The demo project of Database - PTIT.
+Các project học tập cho môn Cơ sở dữ liệu tại PTIT
